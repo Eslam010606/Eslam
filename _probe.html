@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>chat brain probe</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+<main id="main"></main>
+<footer class="site-footer" id="site-footer"></footer>
+<div class="modal-root" id="modal-root" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="chat-root" id="chat-root"></div>
+<script>window.CHAT_CONFIG = window.CHAT_CONFIG || {};</script>
+<script src="js/data.js"></script><script src="js/i18n.js"></script><script src="js/core.js"></script>
+<script src="js/header.js"></script><script src="js/sections.js"></script><script src="js/projects.js"></script>
+<script src="js/github.js"></script><script src="js/contact.js"></script><script src="js/terminal.js"></script>
+<script src="js/chat-i1.js"></script><script src="js/chat-i2.js"></script><script src="js/chat-i3.js"></script>
+<script src="js/chat-brain.js"></script><script src="js/chat.js"></script>
+<script>
+  window.addEventListener("load", function () {
+    setTimeout(function () {
+      var out = [];
+      var brain = window.EDBrain;
+      var questions = [
+        ["Who is Eslam?", "en"],
+        ["Does eslam know Python?", "ar"],
+        ["ما هو ايميله؟", "en"],
+        ["ايه المشاريع؟", "ar"],
+        ["فين مقيم؟", "ar"],
+        ["بيفهم C# ؟", "ar"],
+      ];
+      questions.forEach(function (q) {
+        var r = brain.reply(q[0], q[1]);
+        var txt = r ? r.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() : "FALLBACK";
+        out.push("Q: " + q[0] + "  →  " + txt.slice(0, 70));
+      });
+      var pre = document.createElement("pre");
+      pre.id = "probe-out";
+      pre.textContent = out.join("\n");
+      document.body.appendChild(pre);
+    }, 500);
+  });
+</script>
+</body>
+</html>
